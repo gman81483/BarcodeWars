@@ -13,7 +13,7 @@ import android.widget.*;
  * 
  * @author Greg Charette
  * @author Steve Aquillano
- *
+ * @author Just a test
  */
 public class BarcodeWars extends Activity 
 { 
