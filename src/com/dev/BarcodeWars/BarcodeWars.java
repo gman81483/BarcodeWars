@@ -78,7 +78,7 @@ public class BarcodeWars extends Activity
 	    		//showDialog(R.string.result_failed, getString(R.string.result_failed_why));
 	    	}
 	    }
-	  }
+	}
 	/**calcScanPoints takes in the result of the barcode scan, calculates the total number of points for the scan,
 	 * and assigns the points to the appropriate player attribute
 	 * @param scanResult
