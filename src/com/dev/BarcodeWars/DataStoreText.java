@@ -199,31 +199,31 @@ public class DataStoreText {
 			{
 				if(count == 0)
 				{
-					//out.println("wins=" + iter.next());
+					out.println("wins=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 1)
 				{
-					//out.println("losses=" + iter.next());
+					out.println("losses=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 2)
 				{
-					//out.println("energy=" + iter.next());
+					out.println("energy=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 3)
 				{
-					//out.println("infantry=" + iter.next());
+					out.println("infantry=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 4)
 				{
-					//out.println("knowledge=" + iter.next());
+					out.println("knowledge=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
@@ -258,31 +258,31 @@ public class DataStoreText {
 			{
 				if(count == 0)
 				{
-					//out.println("wins=" + iter.next());
+					out.println("wins=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 1)
 				{
-					//out.println("losses=" + iter.next());
+					out.println("losses=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 2)
 				{
-					//out.println("energy=" + iter.next());
+					out.println("energy=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 3)
 				{
-					//out.println("infantry=" + iter.next());
+					out.println("infantry=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 4)
 				{
-					//out.println("knowledge=" + iter.next());
+					out.println("knowledge=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
@@ -317,31 +317,31 @@ public class DataStoreText {
 			{
 				if(count == 0)
 				{
-					//out.println("wins=" + iter.next());
+					out.println("wins=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 1)
 				{
-					//out.println("losses=" + iter.next());
+					out.println("losses=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 2)
 				{
-					//out.println("energy=" + iter.next());
+					out.println("energy=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 3)
 				{
-					//out.println("infantry=" + iter.next());
+					out.println("infantry=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 4)
 				{
-					//out.println("knowledge=" + iter.next());
+					out.println("knowledge=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
@@ -376,31 +376,31 @@ public class DataStoreText {
 			{
 				if(count == 0)
 				{
-					//out.println("wins=" + iter.next());
+					out.println("wins=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 1)
 				{
-					//out.println("losses=" + iter.next());
+					out.println("losses=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 2)
 				{
-					//out.println("energy=" + iter.next());
+					out.println("energy=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 3)
 				{
-					//out.println("infantry=" + iter.next());
+					out.println("infantry=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 4)
 				{
-					//out.println("knowledge=" + iter.next());
+					out.println("knowledge=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
@@ -435,31 +435,31 @@ public class DataStoreText {
 			{
 				if(count == 0)
 				{
-					//out.println("wins=" + iter.next());
+					out.println("wins=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 1)
 				{
-					//out.println("losses=" + iter.next());
+					out.println("losses=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 2)
 				{
-					//out.println("energy=" + iter.next());
+					out.println("energy=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 3)
 				{
-					//out.println("infantry=" + iter.next());
+					out.println("infantry=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 4)
 				{
-					//out.println("knowledge=" + iter.next());
+					out.println("knowledge=" + iter.next());
 					Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
