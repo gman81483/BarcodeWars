@@ -2,6 +2,8 @@ package com.dev.BarcodeWars;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.dev.BarcodeWars.R;
 import android.app.Activity; 
 import android.content.*;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ public class BarcodeWars extends Activity
 	int infantry = 0;
 	int knowledge = 0;
 	String increasedAttribute = null;
+	DataStoreText dataStore;
 	
 	/**onCreate instantiates the initial program objects and sets up layout when program
 	 * is opened
@@ -38,6 +41,9 @@ public class BarcodeWars extends Activity
 		scanButton = (Button) this.findViewById(R.id.scanButton);
 		findViewById(R.id.scanButton).setOnClickListener(ocl);
 		scanResultText = (TextView) this.findViewById(R.id.scanResultText);
+		
+		Context appContext = getApplicationContext();
+		dataStore = new DataStoreText(appContext);
 	}
 	
 	/**Method listens for the scanning button to be clicked.  When this happens,
@@ -46,8 +52,14 @@ public class BarcodeWars extends Activity
 	*/
 	public final Button.OnClickListener ocl = new Button.OnClickListener() {
 	    public void onClick(View v) {
-	      Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-	      startActivityForResult(intent, 0);
+	    	
+	    	String scanResult = calcScanPoints("A19N25L567");
+	    	scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!\n\nYour current stats are:\nEnergy: " + energy + "\nInfantry: " + infantry + "\nKnowledge: " + knowledge);
+	    	
+	    	/* Code for scanner -- replace after everything is working
+	    	 * Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		     * startActivityForResult(intent, 0);
+		    */
 	    }
 	  };
 
@@ -55,22 +67,20 @@ public class BarcodeWars extends Activity
 	 * the method @calcScanPoints to calculate the total points the player receives from
 	 * the object that was scanned
 	*/
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) 
+	/*public void onActivityResult(int requestCode, int resultCode, Intent intent) 
 	{
 	    if (requestCode == 0) 
 	    {
 	    	if (resultCode == RESULT_OK) 
 	    	{
-	    		String contents = intent.getStringExtra("SCAN_RESULT");
-	    		Log.v("result: ", contents);
-	    		String scanResult = calcScanPoints(contents);
+	    		
 	    		//String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!\n\nYour current stats are:\nEnergy: " + energy + "\nInfantry: " + infantry + "\nKnowledge: " + knowledge);
 
 	    		/*if(format.equals("ISBN"))
 	    		{
 	    			knowledge += Integer.parseInt(scanResult);
-	    		}*/
+	    		}
 	    	} 
 	    	
 	    	else if (resultCode == RESULT_CANCELED) 
@@ -78,7 +88,7 @@ public class BarcodeWars extends Activity
 	    		//showDialog(R.string.result_failed, getString(R.string.result_failed_why));
 	    	}
 	    }
-	}
+	}*/
 	/**calcScanPoints takes in the result of the barcode scan, calculates the total number of points for the scan,
 	 * and assigns the points to the appropriate player attribute
 	 * @param scanResult
@@ -113,12 +123,15 @@ public class BarcodeWars extends Activity
 		{
 			case 0: energy += finalScannedPoints;
 				increasedAttribute = "Energy";
+				dataStore.setEnergy(energy);
 				break;
 			case 1: infantry += finalScannedPoints;
 				increasedAttribute = "Infantry";
+				dataStore.setInfantry(infantry);
 				break;
 			case 2: knowledge += finalScannedPoints;
 				increasedAttribute = "Knowledge";
+				dataStore.setKnowledge(knowledge);
 				break;
 		}
 		
