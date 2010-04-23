@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dev.BarcodeWarsNoScan.R;
-import com.dev.BarcodeWarsNoScan.R.id;
-import com.dev.BarcodeWarsNoScan.R.layout;
 import android.app.Activity; 
 import android.content.*;
 import android.os.Bundle;
