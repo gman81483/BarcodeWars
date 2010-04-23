@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dev.BarcodeWars;
 
 import java.util.*;

@@ -56,10 +56,8 @@ public class BarcodeWars extends Activity
 	    	String scanResult = calcScanPoints("A19N25L567");
 	    	scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!\n\nYour current stats are:\nEnergy: " + energy + "\nInfantry: " + infantry + "\nKnowledge: " + knowledge);
 	    	
-	    	/* Code for scanner -- replace after everything is working
-	    	 * Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-		     * startActivityForResult(intent, 0);
-		    */
+	    	/*Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		    startActivityForResult(intent, 0);*/
 	    }
 	  };
 
