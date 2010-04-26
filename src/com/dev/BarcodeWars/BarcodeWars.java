@@ -19,15 +19,20 @@ import android.widget.*;
  */
 public class BarcodeWars extends Activity 
 { 
-	Button scanButton;
-	TextView scanResultText;
-	int wins = 0;
-	int losses = 0;
-	int energy = 0;
-	int infantry = 0;
-	int knowledge = 0;
-	String increasedAttribute = null;
-	DataStoreText dataStore;
+	private Button scanButton;
+	private TextView scanResultText;
+	private int wins = 0;
+	private int losses = 0;
+	private int energy = 0;
+	private int infantry = 0;
+	private int knowledge = 0;
+	private String increasedAttribute = null;
+	private DataStoreText dataStore;
+	private final int WINS_ATTRIBUTE = 0;
+	private final int LOSSES_ATTRIBUTE = 1;
+	private final int ENERGY_ATTRIBUTE = 2;
+	private final int INFANTRY_ATTRIBUTE = 3;
+	private final int KNOWLEDGE_ATTRIBUTE = 4;	
 	
 	/**onCreate instantiates the initial program objects and sets up layout when program
 	 * is opened
@@ -44,6 +49,12 @@ public class BarcodeWars extends Activity
 		
 		Context appContext = getApplicationContext();
 		dataStore = new DataStoreText(appContext);
+		
+		wins = dataStore.getWins();
+		losses = dataStore.getLosses();
+		energy = dataStore.getEnergy();
+		infantry = dataStore.getInfantry();
+		knowledge = dataStore.getKnowledge();
 	}
 	
 	/**Method listens for the scanning button to be clicked.  When this happens,
@@ -121,15 +132,15 @@ public class BarcodeWars extends Activity
 		{
 			case 0: energy += finalScannedPoints;
 				increasedAttribute = "Energy";
-				dataStore.setEnergy(energy);
+				dataStore.increaseAttribute(ENERGY_ATTRIBUTE, energy);
 				break;
 			case 1: infantry += finalScannedPoints;
 				increasedAttribute = "Infantry";
-				dataStore.setInfantry(infantry);
+				dataStore.increaseAttribute(INFANTRY_ATTRIBUTE, infantry);
 				break;
 			case 2: knowledge += finalScannedPoints;
 				increasedAttribute = "Knowledge";
-				dataStore.setKnowledge(knowledge);
+				dataStore.increaseAttribute(KNOWLEDGE_ATTRIBUTE, knowledge);
 				break;
 		}
 		
