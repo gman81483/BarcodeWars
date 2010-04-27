@@ -14,23 +14,27 @@ import android.util.Log;
  * @author Greg Charette
  * @author Steve Aquillano
  *
+ * Writes to a file in the following order:
+ * Wins
+ * Losses
+ * Health
+ * Infantry
+ * Skill
  */
 public class DataStoreText {
 	
 	private int wins = 0;
 	private int losses = 0;
-	private int energy = 0;
+	private int health = 0;
 	private int infantry = 0;
-	private int knowledge = 0;
+	private int skill = 0;
 	PrintWriter out;
 	Context appContext;
 	private final int WINS_ATTRIBUTE = 0;
 	private final int LOSSES_ATTRIBUTE = 1;
-	private final int ENERGY_ATTRIBUTE = 2;
+	private final int HEALTH_ATTRIBUTE = 2;
 	private final int INFANTRY_ATTRIBUTE = 3;
-	private final int KNOWLEDGE_ATTRIBUTE = 4;
-	
-	Vector<Integer> vect = new Vector<Integer>();
+	private final int SKILL_ATTRIBUTE = 4;
 	
 	public DataStoreText(Context context)
 	{
@@ -125,7 +129,7 @@ public class DataStoreText {
 		}
 	}
 	
-	public void setEnergy()
+	public void setHealth()
 	{
 		String line;
 		int count = 0;
@@ -133,22 +137,22 @@ public class DataStoreText {
 		try
 		{	Log.v("In try: ", "right before opening file for reading");
 			//Opens a file to read
-			FileInputStream energyFIS = appContext.openFileInput("datastore.txt");
+			FileInputStream healthFIS = appContext.openFileInput("datastore.txt");
 			
-			BufferedReader energyIn = new BufferedReader(new InputStreamReader(energyFIS));
+			BufferedReader healthIn = new BufferedReader(new InputStreamReader(healthFIS));
 			
 			Log.v("File for reading: ", "Created");
 			//Runs while there is still information to read
-			while((line = energyIn.readLine()) != null)
+			while((line = healthIn.readLine()) != null)
 			{	Log.v("In read file loop", "Reading file");	
-				//If statement runs if energy
+				//If statement runs if health
 				if(count == 2)
 				{
 					//Try allows for error catching
 					try
 					{
-						energy = Integer.parseInt(line);
-						Log.v("Begin Energy: ", Integer.toString(energy));
+						health = Integer.parseInt(line);
+						Log.v("Begin Health: ", Integer.toString(health));
 					}
 						
 					//Catches BadAttributeValueException and lets user know
@@ -190,7 +194,7 @@ public class DataStoreText {
 					//Try allows for error catching
 					try
 					{
-						losses = Integer.parseInt(line);
+						infantry = Integer.parseInt(line);
 						Log.v("Begin Infantry: ", Integer.toString(infantry));
 					}
 						
@@ -211,7 +215,7 @@ public class DataStoreText {
 		}
 	}
 	
-	public void setKnowledge()
+	public void setSkill()
 	{
 		String line;
 		int count = 0;
@@ -219,13 +223,13 @@ public class DataStoreText {
 		try
 		{	Log.v("In try: ", "right before opening file for reading");
 			//Opens a file to read
-			FileInputStream knowledgeFIS = appContext.openFileInput("datastore.txt");
+			FileInputStream skillFIS = appContext.openFileInput("datastore.txt");
 			
-			BufferedReader knowledgeIn = new BufferedReader(new InputStreamReader(knowledgeFIS));
+			BufferedReader skillIn = new BufferedReader(new InputStreamReader(skillFIS));
 			
 			Log.v("File for reading: ", "Created");
 			//Runs while there is still information to read
-			while((line = knowledgeIn.readLine()) != null)
+			while((line = skillIn.readLine()) != null)
 			{	Log.v("In read file loop", "Reading file");	
 				//If statement runs if employee is a salaried employee
 				if(count == 1)
@@ -233,8 +237,8 @@ public class DataStoreText {
 					//Try allows for error catching
 					try
 					{
-						losses = Integer.parseInt(line);
-						Log.v("Begin Knowledge: ", Integer.toString(knowledge));
+						skill = Integer.parseInt(line);
+						Log.v("Begin Skill: ", Integer.toString(skill));
 					}
 						
 					//Catches BadAttributeValueException and lets user know
@@ -264,9 +268,9 @@ public class DataStoreText {
 		return losses;
 	}
 	
-	public int getEnergy()
+	public int getHealth()
 	{
-		return energy;
+		return health;
 	}
 	
 	public int getInfantry()
@@ -274,9 +278,9 @@ public class DataStoreText {
 		return infantry;
 	}
 	
-	public int getKnowledge()
+	public int getSkill()
 	{
-		return knowledge;
+		return skill;
 	}
 	
 	
@@ -285,19 +289,14 @@ public class DataStoreText {
 		switch(attribute)
 		{
 			case WINS_ATTRIBUTE: wins += increaseAmt;
-				vect.setElementAt(wins, 0);
 				break;
 			case LOSSES_ATTRIBUTE: losses += increaseAmt;
-				vect.setElementAt(losses, 1);
 				break;
-			case ENERGY_ATTRIBUTE: energy += increaseAmt;
-				vect.setElementAt(energy, 2);
+			case HEALTH_ATTRIBUTE: health += increaseAmt;
 				break;
 			case INFANTRY_ATTRIBUTE: infantry += increaseAmt;
-				vect.setElementAt(infantry, 3);
 				break;
-			case KNOWLEDGE_ATTRIBUTE: knowledge += increaseAmt;
-				vect.setElementAt(knowledge, 4);
+			case SKILL_ATTRIBUTE: skill += increaseAmt;
 				break;				  
 		}
 		
@@ -305,82 +304,34 @@ public class DataStoreText {
 		
 		try
 		{	
-			String line;
-			int count2 = 0;
-			
-			FileInputStream fis = appContext.openFileInput("datastore.txt");
-			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-			
-			while((line = in.readLine()) != null)
-			{
-				if(count2 == 0)
-				{
-					wins = Integer.parseInt(line);
-					Log.v("Output before storage: ", line);
-				}
-				
-				if(count2 == 1)
-				{
-					losses = Integer.parseInt(line);
-					Log.v("Output before storage: ", line);
-				}
-				
-				if(count2 == 2)
-				{
-					energy = Integer.parseInt(line);
-					Log.v("Output before storage: ", line);
-				}
-				
-				if(count2 == 3)
-				{
-					infantry = Integer.parseInt(line);
-					Log.v("Output before storage: ", line);
-				}
-				
-				if(count2 == 0)
-				{
-					knowledge = Integer.parseInt(line);
-					Log.v("Output before storage: ", line);
-				}
-				
-				count++;
-			}
-			
 			FileOutputStream fos = appContext.openFileOutput("datastore.txt", 0);
 			out = new PrintWriter(new OutputStreamWriter(fos));
-		
-			Iterator<Integer> iter = vect.iterator();
 			
-			while(iter.hasNext())
+			while( count <= 4)
 			{
 				if(count == 0)
 				{
-					out.println(iter.next());
-					//Log.v("Iterator value: ", Integer.toString(iter.next()));
+					out.println(wins);
 				}
 				
 				if(count == 1)
 				{
-					out.println(iter.next());
-					//Log.v("Iterator value: ", Integer.toString(iter.next()));
+					out.println(losses);
 				}
 				
 				if(count == 2)
 				{
-					out.println(iter.next());
-					//Log.v("Iterator value: ", Integer.toString(iter.next()));
+					out.println(health);
 				}
 				
 				if(count == 3)
 				{
-					out.println(iter.next());
-					//Log.v("Iterator value: ", Integer.toString(iter.next()));
+					out.println(infantry);
 				}
 				
 				if(count == 4)
 				{
-					out.println(iter.next());
-					//Log.v("Iterator value: ", Integer.toString(iter.next()));
+					out.println(skill);
 				}
 				
 				out.flush();
