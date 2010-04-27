@@ -22,8 +22,8 @@ public class DataStoreText {
 	private int energy = 0;
 	private int infantry = 0;
 	private int knowledge = 0;
-	private BufferedReader in;
-	private PrintWriter out;
+	BufferedReader in;
+	PrintWriter out;
 	Context appContext;
 	private final int WINS_ATTRIBUTE = 0;
 	private final int LOSSES_ATTRIBUTE = 1;
@@ -53,7 +53,7 @@ public class DataStoreText {
 			//Opens a file to read
 			FileInputStream fis = appContext.openFileInput("datastore.txt");
 			
-			in = new BufferedReader(new InputStreamReader(fis));
+			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
 			
 			Log.v("File for reading: ", "Created");
 			//Runs while there is still information to read
@@ -219,13 +219,44 @@ public class DataStoreText {
 		try
 		{	
 			String line;
+			int count2 = 0;
 			
 			FileInputStream fis = appContext.openFileInput("datastore.txt");
 			in = new BufferedReader(new InputStreamReader(fis));
 			
 			while((line = in.readLine()) != null)
 			{
-				Log.v("Output before storage: ", line);
+				if(count2 == 0)
+				{
+					wins = Integer.parseInt(line);
+					Log.v("Output before storage: ", line);
+				}
+				
+				if(count2 == 1)
+				{
+					losses = Integer.parseInt(line);
+					Log.v("Output before storage: ", line);
+				}
+				
+				if(count2 == 2)
+				{
+					energy = Integer.parseInt(line);
+					Log.v("Output before storage: ", line);
+				}
+				
+				if(count2 == 3)
+				{
+					infantry = Integer.parseInt(line);
+					Log.v("Output before storage: ", line);
+				}
+				
+				if(count2 == 0)
+				{
+					knowledge = Integer.parseInt(line);
+					Log.v("Output before storage: ", line);
+				}
+				
+				count++;
 			}
 			
 			FileOutputStream fos = appContext.openFileOutput("datastore.txt", 0);
@@ -237,31 +268,31 @@ public class DataStoreText {
 			{
 				if(count == 0)
 				{
-					out.println("wins=" + iter.next());
+					out.println(iter.next());
 					//Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 1)
 				{
-					out.println("losses=" + iter.next());
+					out.println(iter.next());
 					//Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 2)
 				{
-					out.println("energy=" + iter.next());
+					out.println(iter.next());
 					//Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 3)
 				{
-					out.println("infantry=" + iter.next());
+					out.println(iter.next());
 					//Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
 				if(count == 4)
 				{
-					out.println("knowledge=" + iter.next());
+					out.println(iter.next());
 					//Log.v("Iterator value: ", Integer.toString(iter.next()));
 				}
 				
