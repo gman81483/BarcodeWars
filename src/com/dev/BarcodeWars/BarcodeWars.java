@@ -18,14 +18,9 @@ import android.widget.*;
  *
  */
 public class BarcodeWars extends Activity 
-{ 
+{
 	private Button scanButton;
 	private TextView scanResultText;
-	private int wins = 0;
-	private int losses = 0;
-	private int energy = 0;
-	private int infantry = 0;
-	private int knowledge = 0;
 	private String increasedAttribute = null;
 	private DataStoreText dataStore;
 	private final int WINS_ATTRIBUTE = 0;
@@ -50,11 +45,11 @@ public class BarcodeWars extends Activity
 		Context appContext = getApplicationContext();
 		dataStore = new DataStoreText(appContext);
 		
-		wins = dataStore.getWins();
-		losses = dataStore.getLosses();
-		energy = dataStore.getEnergy();
-		infantry = dataStore.getInfantry();
-		knowledge = dataStore.getKnowledge();
+		dataStore.setWins();
+		dataStore.setLosses();
+		dataStore.setEnergy();
+		dataStore.setInfantry();
+		dataStore.setKnowledge();
 	}
 	
 	/**Method listens for the scanning button to be clicked.  When this happens,
@@ -65,7 +60,7 @@ public class BarcodeWars extends Activity
 	    public void onClick(View v) {
 	    	
 	    	String scanResult = calcScanPoints("A19N25L567");
-	    	scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!\n\nYour current stats are:\nEnergy: " + energy + "\nInfantry: " + infantry + "\nKnowledge: " + knowledge);
+	    	scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!\n\nYour current stats are:\nEnergy: " + dataStore.getEnergy() + "\nInfantry: " + dataStore.getInfantry() + "\nKnowledge: " + dataStore.getKnowledge());
 	    	
 	    	/*Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 		    startActivityForResult(intent, 0);*/
@@ -130,17 +125,17 @@ public class BarcodeWars extends Activity
 		
 		switch(randomNum)
 		{
-			case 0: energy += finalScannedPoints;
+			case 0:
 				increasedAttribute = "Energy";
-				dataStore.increaseAttribute(ENERGY_ATTRIBUTE, energy);
+				dataStore.increaseAttribute(ENERGY_ATTRIBUTE, finalScannedPoints);
 				break;
-			case 1: infantry += finalScannedPoints;
+			case 1:
 				increasedAttribute = "Infantry";
-				dataStore.increaseAttribute(INFANTRY_ATTRIBUTE, infantry);
+				dataStore.increaseAttribute(INFANTRY_ATTRIBUTE, finalScannedPoints);
 				break;
-			case 2: knowledge += finalScannedPoints;
+			case 2:
 				increasedAttribute = "Knowledge";
-				dataStore.increaseAttribute(KNOWLEDGE_ATTRIBUTE, knowledge);
+				dataStore.increaseAttribute(KNOWLEDGE_ATTRIBUTE, finalScannedPoints);
 				break;
 		}
 		

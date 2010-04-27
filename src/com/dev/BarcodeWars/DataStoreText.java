@@ -22,7 +22,6 @@ public class DataStoreText {
 	private int energy = 0;
 	private int infantry = 0;
 	private int knowledge = 0;
-	BufferedReader in;
 	PrintWriter out;
 	Context appContext;
 	private final int WINS_ATTRIBUTE = 0;
@@ -36,36 +35,33 @@ public class DataStoreText {
 	public DataStoreText(Context context)
 	{
 		Log.v("Entering DataStoreText Constructor", "YEAH BABY");
-		initAttributes();
 		
 		appContext = context;
 	}
 	
-	public void initAttributes()
+	public void setWins()
 	{
-		Log.v("In INITATTRIBUTES", "HELLZ YEAH!!!!");
-		//String stores information read from file
 		String line;
+		int count = 0;
 		
-		//Try allows for error catching
 		try
 		{	Log.v("In try: ", "right before opening file for reading");
 			//Opens a file to read
-			FileInputStream fis = appContext.openFileInput("datastore.txt");
+			FileInputStream winsFIS = appContext.openFileInput("datastore.txt");
 			
-			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+			BufferedReader winsIn = new BufferedReader(new InputStreamReader(winsFIS));
 			
 			Log.v("File for reading: ", "Created");
 			//Runs while there is still information to read
-			while((line = in.readLine()) != null)
+			while((line = winsIn.readLine()) != null)
 			{	Log.v("In read file loop", "Reading file");	
 				//If statement runs if employee is a salaried employee
-				if(line.substring(0,3).equals("wins"))
+				if(count == 0)
 				{
 					//Try allows for error catching
 					try
 					{
-						wins = Integer.parseInt(line.substring(5,line.length() - 1));
+						wins = Integer.parseInt(line);
 						Log.v("Begin Wins: ", Integer.toString(wins));
 					}
 						
@@ -76,13 +72,39 @@ public class DataStoreText {
 					}
 				}
 				
+				count++;
+			}
+		}
+		
+		catch(Exception e)
+		{
+			System.out.print("\n" + e);
+		}
+	}
+	
+	public void setLosses()
+	{
+		String line;
+		int count = 0;
+		
+		try
+		{	Log.v("In try: ", "right before opening file for reading");
+			//Opens a file to read
+			FileInputStream lossesFIS = appContext.openFileInput("datastore.txt");
+			
+			BufferedReader lossesIn = new BufferedReader(new InputStreamReader(lossesFIS));
+			
+			Log.v("File for reading: ", "Created");
+			//Runs while there is still information to read
+			while((line = lossesIn.readLine()) != null)
+			{	Log.v("In read file loop", "Reading file");	
 				//If statement runs if employee is a salaried employee
-				if(line.substring(0,5).equals("losses"))
+				if(count == 1)
 				{
 					//Try allows for error catching
 					try
 					{
-						losses = Integer.parseInt(line.substring(7,line.length() - 1));
+						losses = Integer.parseInt(line);
 						Log.v("Begin Losses: ", Integer.toString(losses));
 					}
 						
@@ -93,13 +115,39 @@ public class DataStoreText {
 					}
 				}
 				
-				//If statement runs if employee is a salaried employee
-				if(line.substring(0,5).equals("energy"))
+				count++;
+			}
+		}
+		
+		catch(Exception e)
+		{
+			System.out.print("\n" + e);
+		}
+	}
+	
+	public void setEnergy()
+	{
+		String line;
+		int count = 0;
+		
+		try
+		{	Log.v("In try: ", "right before opening file for reading");
+			//Opens a file to read
+			FileInputStream energyFIS = appContext.openFileInput("datastore.txt");
+			
+			BufferedReader energyIn = new BufferedReader(new InputStreamReader(energyFIS));
+			
+			Log.v("File for reading: ", "Created");
+			//Runs while there is still information to read
+			while((line = energyIn.readLine()) != null)
+			{	Log.v("In read file loop", "Reading file");	
+				//If statement runs if energy
+				if(count == 2)
 				{
 					//Try allows for error catching
 					try
 					{
-						energy = Integer.parseInt(line.substring(7,line.length() - 1));
+						energy = Integer.parseInt(line);
 						Log.v("Begin Energy: ", Integer.toString(energy));
 					}
 						
@@ -110,13 +158,39 @@ public class DataStoreText {
 					}
 				}
 				
+				count++;
+			}
+		}
+		
+		catch(Exception e)
+		{
+			System.out.print("\n" + e);
+		}
+	}
+	
+	public void setInfantry()
+	{
+		String line;
+		int count = 0;
+		
+		try
+		{	Log.v("In try: ", "right before opening file for reading");
+			//Opens a file to read
+			FileInputStream infantryFIS = appContext.openFileInput("datastore.txt");
+			
+			BufferedReader infantryIn = new BufferedReader(new InputStreamReader(infantryFIS));
+			
+			Log.v("File for reading: ", "Created");
+			//Runs while there is still information to read
+			while((line = infantryIn.readLine()) != null)
+			{	Log.v("In read file loop", "Reading file");	
 				//If statement runs if employee is a salaried employee
-				if(line.substring(0,7).equals("infantry"))
+				if(count == 3)
 				{
 					//Try allows for error catching
 					try
 					{
-						infantry = Integer.parseInt(line.substring(9,line.length() - 1));
+						losses = Integer.parseInt(line);
 						Log.v("Begin Infantry: ", Integer.toString(infantry));
 					}
 						
@@ -127,12 +201,39 @@ public class DataStoreText {
 					}
 				}
 				
-				if(line.substring(0,8).equals("knowledge"))
+				count++;
+			}
+		}
+		
+		catch(Exception e)
+		{
+			System.out.print("\n" + e);
+		}
+	}
+	
+	public void setKnowledge()
+	{
+		String line;
+		int count = 0;
+		
+		try
+		{	Log.v("In try: ", "right before opening file for reading");
+			//Opens a file to read
+			FileInputStream knowledgeFIS = appContext.openFileInput("datastore.txt");
+			
+			BufferedReader knowledgeIn = new BufferedReader(new InputStreamReader(knowledgeFIS));
+			
+			Log.v("File for reading: ", "Created");
+			//Runs while there is still information to read
+			while((line = knowledgeIn.readLine()) != null)
+			{	Log.v("In read file loop", "Reading file");	
+				//If statement runs if employee is a salaried employee
+				if(count == 1)
 				{
 					//Try allows for error catching
 					try
 					{
-						knowledge = Integer.parseInt(line.substring(10,line.length() - 1));
+						losses = Integer.parseInt(line);
 						Log.v("Begin Knowledge: ", Integer.toString(knowledge));
 					}
 						
@@ -143,29 +244,14 @@ public class DataStoreText {
 					}
 				}
 				
-				try
-				{
-					in.close();
-				}
-				
-				catch(Exception e)
-				{
-					System.out.print("\n" + e);
-				}
+				count++;
 			}
 		}
 		
-		//Catches IO Exception and lets user know
 		catch(Exception e)
 		{
 			System.out.print("\n" + e);
 		}
-		
-		vect.add(wins);
-		vect.add(losses);
-		vect.add(energy);
-		vect.add(infantry);
-		vect.add(knowledge);
 	}
 	
 	public int getWins()
@@ -192,6 +278,7 @@ public class DataStoreText {
 	{
 		return knowledge;
 	}
+	
 	
 	public void increaseAttribute(int attribute, int increaseAmt)
 	{
@@ -222,7 +309,7 @@ public class DataStoreText {
 			int count2 = 0;
 			
 			FileInputStream fis = appContext.openFileInput("datastore.txt");
-			in = new BufferedReader(new InputStreamReader(fis));
+			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
 			
 			while((line = in.readLine()) != null)
 			{
