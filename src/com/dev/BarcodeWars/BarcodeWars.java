@@ -145,6 +145,7 @@ public class BarcodeWars extends Activity
 	    	if(v.getId() == scanButton.getId())
 	    	{
 		    	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		    	intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 			    startActivityForResult(intent, 0);
 		    	
 		    	String scanResult = calcScanPoints(scannedResult);
