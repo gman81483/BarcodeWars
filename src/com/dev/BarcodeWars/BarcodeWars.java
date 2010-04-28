@@ -143,57 +143,6 @@ public class BarcodeWars extends Activity
 	        Intent intent = new Intent("com.google.zxing.client.android.SCAN"); 
 	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); 
 	        startActivityForResult(intent, 0);
-	        
-	        String scanResult = calcScanPoints(scannedResult);
-	        
-	      //Sets Health text on GUI to correct value
-	    	if(increasedAttribute.equals("Health"))
-	    	{
-	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
-	    		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
-	    	}
-	    	
-	    	//Sets Skill text on GUI to correct value
-	    	if(increasedAttribute.equals("Skill"))
-	    	{
-	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
-	    		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
-	    	}
-	    	
-	    	//Sets Infantry text on GUI to correct value
-	    	if(increasedAttribute.equals("Infantry"))
-	    	{
-	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
-	    		textViewInfantryQuantity.setText(Integer.toString(dataStore.getInfantry()));
-	    	}
-	    	
-	    	//Sets Humvee text on GUI to correct value
-	    	if(increasedAttribute.equals("Humvee"))
-	    	{
-	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
-	    		textViewHumveeQuantity.setText(Integer.toString(dataStore.getHumvee()));
-	    	}
-	    	
-	    	//Sets Tank text on GUI to correct value
-	    	if(increasedAttribute.equals("Tank"))
-	    	{
-	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
-	    		textViewTankQuantity.setText(Integer.toString(dataStore.getTank()));
-	    	}
-	    	
-	    	//Sets Helicopter text on GUI to correct value
-	    	if(increasedAttribute.equals("Heli"))
-	    	{
-	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
-	    		textViewHeliQuantity.setText(Integer.toString(dataStore.getHeli()));
-	    	}
-	    	
-	    	//Sets Jet Fighter text on GUI to correct value
-	    	if(increasedAttribute.equals("Jet"))
-	    	{
-	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
-	    		textViewJetQuantity.setText(Integer.toString(dataStore.getJet()));
-	    	}
 	    } 
 	};
 	
@@ -279,6 +228,57 @@ public class BarcodeWars extends Activity
 	    	if (resultCode == RESULT_OK) 
 	    	{
 	    		scannedResult = intent.getStringExtra("SCAN_RESULT");
+	    		
+	    		String scanResult = calcScanPoints(scannedResult);
+		        
+	  	      //Sets Health text on GUI to correct value
+	  	    	if(increasedAttribute.equals("Health"))
+	  	    	{
+	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+	  	    		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
+	  	    	}
+	  	    	
+	  	    	//Sets Skill text on GUI to correct value
+	  	    	if(increasedAttribute.equals("Skill"))
+	  	    	{
+	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+	  	    		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
+	  	    	}
+	  	    	
+	  	    	//Sets Infantry text on GUI to correct value
+	  	    	if(increasedAttribute.equals("Infantry"))
+	  	    	{
+	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+	  	    		textViewInfantryQuantity.setText(Integer.toString(dataStore.getInfantry()));
+	  	    	}
+	  	    	
+	  	    	//Sets Humvee text on GUI to correct value
+	  	    	if(increasedAttribute.equals("Humvee"))
+	  	    	{
+	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+	  	    		textViewHumveeQuantity.setText(Integer.toString(dataStore.getHumvee()));
+	  	    	}
+	  	    	
+	  	    	//Sets Tank text on GUI to correct value
+	  	    	if(increasedAttribute.equals("Tank"))
+	  	    	{
+	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+	  	    		textViewTankQuantity.setText(Integer.toString(dataStore.getTank()));
+	  	    	}
+	  	    	
+	  	    	//Sets Helicopter text on GUI to correct value
+	  	    	if(increasedAttribute.equals("Heli"))
+	  	    	{
+	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+	  	    		textViewHeliQuantity.setText(Integer.toString(dataStore.getHeli()));
+	  	    	}
+	  	    	
+	  	    	//Sets Jet Fighter text on GUI to correct value
+	  	    	if(increasedAttribute.equals("Jet"))
+	  	    	{
+	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+	  	    		textViewJetQuantity.setText(Integer.toString(dataStore.getJet()));
+	  	    	}
 	    	}
 	    }
 	}
