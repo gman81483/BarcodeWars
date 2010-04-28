@@ -68,7 +68,7 @@ public class BarcodeWars extends Activity
 		
 		//Sets up buttons for use in GUI
 		scanButton = (Button) this.findViewById(R.id.scanButton);
-		findViewById(R.id.scanButton).setOnClickListener(ocl);
+		findViewById(R.id.scanButton).setOnClickListener(mScan);
 		attackButton = (Button) this.findViewById(R.id.attackButton);
 		findViewById(R.id.attackButton).setOnClickListener(ocl);
 		
@@ -138,94 +138,90 @@ public class BarcodeWars extends Activity
 	 * a new intent is created that opens the scanning class
 	 * to start performing the desired operation
 	*/
+	public Button.OnClickListener mScan = new Button.OnClickListener() { 
+	    public void onClick(View v) { 
+	        Intent intent = new Intent("com.google.zxing.client.android.SCAN"); 
+	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); 
+	        startActivityForResult(intent, 0);
+	        
+	        String scanResult = calcScanPoints(scannedResult);
+	        
+	      //Sets Health text on GUI to correct value
+	    	if(increasedAttribute.equals("Health"))
+	    	{
+	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+	    		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
+	    	}
+	    	
+	    	//Sets Skill text on GUI to correct value
+	    	if(increasedAttribute.equals("Skill"))
+	    	{
+	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+	    		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
+	    	}
+	    	
+	    	//Sets Infantry text on GUI to correct value
+	    	if(increasedAttribute.equals("Infantry"))
+	    	{
+	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+	    		textViewInfantryQuantity.setText(Integer.toString(dataStore.getInfantry()));
+	    	}
+	    	
+	    	//Sets Humvee text on GUI to correct value
+	    	if(increasedAttribute.equals("Humvee"))
+	    	{
+	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+	    		textViewHumveeQuantity.setText(Integer.toString(dataStore.getHumvee()));
+	    	}
+	    	
+	    	//Sets Tank text on GUI to correct value
+	    	if(increasedAttribute.equals("Tank"))
+	    	{
+	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+	    		textViewTankQuantity.setText(Integer.toString(dataStore.getTank()));
+	    	}
+	    	
+	    	//Sets Helicopter text on GUI to correct value
+	    	if(increasedAttribute.equals("Heli"))
+	    	{
+	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+	    		textViewHeliQuantity.setText(Integer.toString(dataStore.getHeli()));
+	    	}
+	    	
+	    	//Sets Jet Fighter text on GUI to correct value
+	    	if(increasedAttribute.equals("Jet"))
+	    	{
+	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+	    		textViewJetQuantity.setText(Integer.toString(dataStore.getJet()));
+	    	}
+	    } 
+	};
+	
 	public final Button.OnClickListener ocl = new Button.OnClickListener() {
 	    public void onClick(View v) {
-	    	
-	    	//Executes if scan button is pressed
-	    	if(v.getId() == scanButton.getId())
-	    	{
-		    	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-		    	intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-			    startActivityForResult(intent, 0);
-		    	
-		    	String scanResult = calcScanPoints(scannedResult);
-		    	
-		    	//Sets Health text on GUI to correct value
-		    	if(increasedAttribute.equals("Health"))
-		    	{
-		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
-		    		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
-		    	}
-		    	
-		    	//Sets Skill text on GUI to correct value
-		    	if(increasedAttribute.equals("Skill"))
-		    	{
-		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
-		    		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
-		    	}
-		    	
-		    	//Sets Infantry text on GUI to correct value
-		    	if(increasedAttribute.equals("Infantry"))
-		    	{
-		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
-		    		textViewInfantryQuantity.setText(Integer.toString(dataStore.getInfantry()));
-		    	}
-		    	
-		    	//Sets Humvee text on GUI to correct value
-		    	if(increasedAttribute.equals("Humvee"))
-		    	{
-		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
-		    		textViewHumveeQuantity.setText(Integer.toString(dataStore.getHumvee()));
-		    	}
-		    	
-		    	//Sets Tank text on GUI to correct value
-		    	if(increasedAttribute.equals("Tank"))
-		    	{
-		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
-		    		textViewTankQuantity.setText(Integer.toString(dataStore.getTank()));
-		    	}
-		    	
-		    	//Sets Helicopter text on GUI to correct value
-		    	if(increasedAttribute.equals("Heli"))
-		    	{
-		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
-		    		textViewHeliQuantity.setText(Integer.toString(dataStore.getHeli()));
-		    	}
-		    	
-		    	//Sets Jet Fighter text on GUI to correct value
-		    	if(increasedAttribute.equals("Jet"))
-		    	{
-		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
-		    		textViewJetQuantity.setText(Integer.toString(dataStore.getJet()));
-		    	}
-	    	}
-	    	
-	    	//Executes if attack button is pressed
-	    	if(v.getId() == attackButton.getId())
-	    	{
-	    		//Initiates fight using the FightEngine
-	    		fight.initiateFight(Integer.parseInt((String)textViewInfantrySelected.getText()), Integer.parseInt((String)textViewSkillValue.getText()), Integer.parseInt((String)textViewHumveeSelected.getText()), Integer.parseInt((String)textViewTankSelected.getText()), Integer.parseInt((String)textViewHeliSelected.getText()), Integer.parseInt((String)textViewJetSelected.getText()));
-	    		
-	    		//Executes if user wins the fight and sets GUI texts to correct values using the DataStore
-	    		if(fight.getFightWinLose())
-	    		{
-	    			scanResultText.setText("Excellent, you won the fight, causing " + fight.getFightResult() + " damage!!");
-	    			dataStore.increaseAttribute(WINS_ATTRIBUTE, 1);
-	    			textViewWinsValue.setText(Integer.toString(dataStore.getWins()));
-	    		}
-	    		
-	    		//Executes if user loses the fight and sets GUI texts to correct values using the DataStore
-	    		if(!fight.getFightWinLose())
-	    		{
-	    			scanResultText.setText("You lose, taking " + fight.getFightResult() + " damage!!");
-	    			dataStore.increaseAttribute(LOSSES_ATTRIBUTE, 1);
-	    			dataStore.decreaseAttribute(HEALTH_ATTRIBUTE, fight.getFightResult());
-	    			textViewLossesValue.setText(Integer.toString(dataStore.getLosses()));
-	    			textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
-	    		}
-	    	}
-	    }
-	  };
+	    		    	
+		//Initiates fight using the FightEngine
+		fight.initiateFight(Integer.parseInt((String)textViewInfantrySelected.getText()), Integer.parseInt((String)textViewSkillValue.getText()), Integer.parseInt((String)textViewHumveeSelected.getText()), Integer.parseInt((String)textViewTankSelected.getText()), Integer.parseInt((String)textViewHeliSelected.getText()), Integer.parseInt((String)textViewJetSelected.getText()));
+		
+		//Executes if user wins the fight and sets GUI texts to correct values using the DataStore
+		if(fight.getFightWinLose())
+		{
+			scanResultText.setText("Excellent, you won the fight, causing " + fight.getFightResult() + " damage!!");
+			dataStore.increaseAttribute(WINS_ATTRIBUTE, 1);
+			textViewWinsValue.setText(Integer.toString(dataStore.getWins()));
+		}
+		
+		//Executes if user loses the fight and sets GUI texts to correct values using the DataStore
+		if(!fight.getFightWinLose())
+		{
+			scanResultText.setText("You lose, taking " + fight.getFightResult() + " damage!!");
+			dataStore.increaseAttribute(LOSSES_ATTRIBUTE, 1);
+			dataStore.decreaseAttribute(HEALTH_ATTRIBUTE, fight.getFightResult());
+			textViewLossesValue.setText(Integer.toString(dataStore.getLosses()));
+			textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
+		}
+	  }
+	};
 	
 	  /**Method listens for any scroll bars to change.
 	   */
