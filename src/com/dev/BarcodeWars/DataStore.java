@@ -28,7 +28,7 @@ public class DataStore {
 	
 	private int wins = 0;
 	private int losses = 0;
-	private int health = 0;
+	private int health = 100;
 	private int infantry = 0;
 	private int skill = 0;
 	private int humvee = 0;
