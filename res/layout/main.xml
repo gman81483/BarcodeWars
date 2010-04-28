@@ -98,7 +98,7 @@
 	android:id="@+id/RelativeLayoutInfantry">
 		<ImageView
 			android:id="@+id/ImageViewInfantry"
-			android:src="@drawable/generic"
+			android:src="@drawable/soldier"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
@@ -158,7 +158,7 @@
 	android:id="@+id/RelativeLayoutHumvee">
 		<ImageView
 			android:id="@+id/ImageViewHumvee"
-			android:src="@drawable/generic"
+			android:src="@drawable/humvee"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
@@ -279,7 +279,7 @@
 		
 		<ImageView
 			android:id="@+id/ImageViewHeli"
-			android:src="@drawable/generic"
+			android:src="@drawable/heli"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
@@ -339,7 +339,7 @@
 		
 		<ImageView
 			android:id="@+id/ImageViewJet"
-			android:src="@drawable/generic"
+			android:src="@drawable/f18"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"

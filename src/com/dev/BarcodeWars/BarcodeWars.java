@@ -9,7 +9,6 @@ import android.content.*;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View; 
-import android.view.View.OnLongClickListener;
 import android.widget.*;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -21,7 +20,9 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  */
 public class BarcodeWars extends Activity 
 {
+	//Declares all attributes
 	private Button scanButton;
+	private Button attackButton;
 	private TextView scanResultText;
 	private TextView textViewHealthValue;
 	private TextView textViewSkillValue;
@@ -43,12 +44,18 @@ public class BarcodeWars extends Activity
 	private SeekBar seekBarHeli;
 	private SeekBar seekBarJet;
 	private String increasedAttribute = null;
-	private DataStoreText dataStore;
+	private DataStore dataStore;
+	private FightEngine fight;
 	private final int WINS_ATTRIBUTE = 0;
 	private final int LOSSES_ATTRIBUTE = 1;
 	private final int HEALTH_ATTRIBUTE = 2;
 	private final int INFANTRY_ATTRIBUTE = 3;
-	private final int SKILL_ATTRIBUTE = 4;	
+	private final int SKILL_ATTRIBUTE = 4;
+	private final int HUMVEE_ATTRIBUTE = 5;
+	private final int TANK_ATTRIBUTE = 6;
+	private final int HELI_ATTRIBUTE = 7;
+	private final int JET_ATTRIBUTE = 8;
+	private String scannedResult;
 	
 	/**onCreate instantiates the initial program objects and sets up layout when program
 	 * is opened
@@ -58,14 +65,26 @@ public class BarcodeWars extends Activity
 	{ 
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.main);
-
+		
+		//Sets up buttons for use in GUI
 		scanButton = (Button) this.findViewById(R.id.scanButton);
 		findViewById(R.id.scanButton).setOnClickListener(ocl);
+		attackButton = (Button) this.findViewById(R.id.attackButton);
+		findViewById(R.id.attackButton).setOnClickListener(ocl);
 		
+		//Instantiates scroll bars to adjust how many of each item to use during a fight
 		seekBarInfantry = (SeekBar) findViewById(R.id.SeekBarInfantry);
-		seekBarInfantry.setOnSeekBarChangeListener(oscl); 
+		seekBarInfantry.setOnSeekBarChangeListener(oscl);
+		seekBarHumvee = (SeekBar) findViewById(R.id.SeekBarHumvee);
+		seekBarHumvee.setOnSeekBarChangeListener(oscl);
+		seekBarTank = (SeekBar) findViewById(R.id.SeekBarTank);
+		seekBarTank.setOnSeekBarChangeListener(oscl);
+		seekBarHeli = (SeekBar) findViewById(R.id.SeekBarHeli);
+		seekBarHeli.setOnSeekBarChangeListener(oscl);
+		seekBarJet = (SeekBar) findViewById(R.id.SeekBarJet);
+		seekBarJet.setOnSeekBarChangeListener(oscl); 
 
-		
+		//Instantiates all the text boxes for use in the GUI
 		scanResultText = (TextView) this.findViewById(R.id.scanResultText);
 		textViewHealthValue = (TextView) this.findViewById(R.id.TextViewHealthValue);
 		textViewSkillValue = (TextView) this.findViewById(R.id.TextViewSkillValue);
@@ -82,56 +101,167 @@ public class BarcodeWars extends Activity
 		textViewJetSelected = (TextView) this.findViewById(R.id.TextViewJetSelected);
 		textViewJetQuantity = (TextView) this.findViewById(R.id.TextViewJetQuantity);
 		
+		//Instantiates application context to enable passing objects through classes
 		Context appContext = getApplicationContext();
-		dataStore = new DataStoreText(appContext);
 		
+		//Instantiates DataStore class for storing the player data
+		dataStore = new DataStore(appContext);
+		
+		//Instantiates the fighting class containing the logic for an attack
+		fight = new FightEngine(appContext);
+		
+		//Initializes all the attributes in the DataStore
 		dataStore.setWins();
 		dataStore.setLosses();
 		dataStore.setHealth();
 		dataStore.setInfantry();
 		dataStore.setSkill();
+		dataStore.setHumvee();
+		dataStore.setTank();
+		dataStore.setHeli();
+		dataStore.setJet();
+		
+		//Initializes all the text boxes to the correct values from the DataStore
 		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
 		textViewWinsValue.setText(Integer.toString(dataStore.getWins()));
 		textViewLossesValue.setText(Integer.toString(dataStore.getLosses()));
 		textViewInfantryQuantity.setText(Integer.toString(dataStore.getInfantry()));
 		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
+		textViewHumveeQuantity.setText(Integer.toString(dataStore.getHumvee()));
+		textViewTankQuantity.setText(Integer.toString(dataStore.getTank()));
+		textViewHeliQuantity.setText(Integer.toString(dataStore.getHeli()));
+		textViewJetQuantity.setText(Integer.toString(dataStore.getJet()));
 		
 	}
 	
-	/**Method listens for the scanning button to be clicked.  When this happens,
-	 * a new intent is created that opens the scanning class and calls @startActivityForResult
+	/**Method listens for the buttons to be clicked.  When this happens,
+	 * a new intent is created that opens the scanning class
 	 * to start performing the desired operation
 	*/
 	public final Button.OnClickListener ocl = new Button.OnClickListener() {
 	    public void onClick(View v) {
 	    	
-	    	String scanResult = calcScanPoints("A19N25L567");
-	    	scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
-	    	
-	    	if(increasedAttribute.equals("Health"))
+	    	//Executes if scan button is pressed
+	    	if(v.getId() == scanButton.getId())
 	    	{
-	    		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
+		    	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+			    startActivityForResult(intent, 0);
+		    	
+		    	String scanResult = calcScanPoints(scannedResult);
+		    	
+		    	//Sets Health text on GUI to correct value
+		    	if(increasedAttribute.equals("Health"))
+		    	{
+		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+		    		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
+		    	}
+		    	
+		    	//Sets Skill text on GUI to correct value
+		    	if(increasedAttribute.equals("Skill"))
+		    	{
+		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+		    		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
+		    	}
+		    	
+		    	//Sets Infantry text on GUI to correct value
+		    	if(increasedAttribute.equals("Infantry"))
+		    	{
+		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+		    		textViewInfantryQuantity.setText(Integer.toString(dataStore.getInfantry()));
+		    	}
+		    	
+		    	//Sets Humvee text on GUI to correct value
+		    	if(increasedAttribute.equals("Humvee"))
+		    	{
+		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+		    		textViewHumveeQuantity.setText(Integer.toString(dataStore.getHumvee()));
+		    	}
+		    	
+		    	//Sets Tank text on GUI to correct value
+		    	if(increasedAttribute.equals("Tank"))
+		    	{
+		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+		    		textViewTankQuantity.setText(Integer.toString(dataStore.getTank()));
+		    	}
+		    	
+		    	//Sets Helicopter text on GUI to correct value
+		    	if(increasedAttribute.equals("Heli"))
+		    	{
+		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+		    		textViewHeliQuantity.setText(Integer.toString(dataStore.getHeli()));
+		    	}
+		    	
+		    	//Sets Jet Fighter text on GUI to correct value
+		    	if(increasedAttribute.equals("Jet"))
+		    	{
+		    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+		    		textViewJetQuantity.setText(Integer.toString(dataStore.getJet()));
+		    	}
 	    	}
 	    	
-	    	if(increasedAttribute.equals("Skill"))
+	    	//Executes if attack button is pressed
+	    	if(v.getId() == attackButton.getId())
 	    	{
-	    		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
+	    		//Initiates fight using the FightEngine
+	    		fight.initiateFight(Integer.parseInt((String)textViewInfantrySelected.getText()), Integer.parseInt((String)textViewSkillValue.getText()), Integer.parseInt((String)textViewHumveeSelected.getText()), Integer.parseInt((String)textViewTankSelected.getText()), Integer.parseInt((String)textViewHeliSelected.getText()), Integer.parseInt((String)textViewJetSelected.getText()));
+	    		
+	    		//Executes if user wins the fight and sets GUI texts to correct values using the DataStore
+	    		if(fight.getFightWinLose())
+	    		{
+	    			scanResultText.setText("Excellent, you won the fight, causing " + fight.getFightResult() + " damage!!");
+	    			dataStore.increaseAttribute(WINS_ATTRIBUTE, 1);
+	    			textViewWinsValue.setText(Integer.toString(dataStore.getWins()));
+	    		}
+	    		
+	    		//Executes if user loses the fight and sets GUI texts to correct values using the DataStore
+	    		if(!fight.getFightWinLose())
+	    		{
+	    			scanResultText.setText("You lose, taking " + fight.getFightResult() + " damage!!");
+	    			dataStore.increaseAttribute(LOSSES_ATTRIBUTE, 1);
+	    			dataStore.decreaseAttribute(HEALTH_ATTRIBUTE, fight.getFightResult());
+	    			textViewLossesValue.setText(Integer.toString(dataStore.getLosses()));
+	    			textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
+	    		}
 	    	}
-	    	
-	    	if(increasedAttribute.equals("Infantry"))
-	    	{
-	    		textViewInfantryQuantity.setText(Integer.toString(dataStore.getInfantry()));
-	    	}
-	    	
-	    	/*Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-		    startActivityForResult(intent, 0);*/
 	    }
 	  };
-	    
-    public final OnSeekBarChangeListener oscl = new OnSeekBarChangeListener() { 
+	
+	  /**Method listens for any scroll bars to change.
+	   */
+	  public final OnSeekBarChangeListener oscl = new OnSeekBarChangeListener() { 
     	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){ 
-                textViewInfantrySelected.setText(Integer.toString((progress * dataStore.getInfantry()) / 100)); 
-           } 
+           
+    	   //Executes if Infantry bar is moved and sets the selected Infantry amount text to the correct value
+    	   if(seekBar.getId() == seekBarInfantry.getId())
+           { 	
+        	   textViewInfantrySelected.setText(Integer.toString((progress * dataStore.getInfantry()) / 100));
+           }
+           
+    	   //Executes if Humvee bar is moved and sets the selected Humvee amount text to the correct value
+           if(seekBar.getId() == seekBarHumvee.getId())
+           { 	
+        	   textViewHumveeSelected.setText(Integer.toString((progress * dataStore.getHumvee()) / 100));
+           }
+           
+           //Executes if Tank bar is moved and sets the selected Tank amount text to the correct value
+           if(seekBar.getId() == seekBarTank.getId())
+           { 	
+        	   textViewTankSelected.setText(Integer.toString((progress * dataStore.getTank()) / 100));
+           }
+           
+           //Executes if Helicopter bar is moved and sets the selected Helicopter amount text to the correct value
+           if(seekBar.getId() == seekBarHeli.getId())
+           { 	
+        	   textViewHeliSelected.setText(Integer.toString((progress * dataStore.getHeli()) / 100));
+           }
+           
+           //Executes if Fighter Jet bar is moved and sets the selected Fighter Jet amount text to the correct value
+           if(seekBar.getId() == seekBarJet.getId())
+           { 	
+        	   textViewJetSelected.setText(Integer.toString((progress * dataStore.getJet()) / 100));
+           }
+           
+        } 
 
            public void onStartTrackingTouch(SeekBar seekBar) {} 
            public void onStopTrackingTouch(SeekBar seekBar) {} 
@@ -145,28 +275,16 @@ public class BarcodeWars extends Activity
 	 * the method @calcScanPoints to calculate the total points the player receives from
 	 * the object that was scanned
 	*/
-	/*public void onActivityResult(int requestCode, int resultCode, Intent intent) 
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) 
 	{
 	    if (requestCode == 0) 
 	    {
 	    	if (resultCode == RESULT_OK) 
 	    	{
-	    		
-	    		//String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!\n\nYour current stats are:\nHealth: " + health + "\nInfantry: " + infantry + "\nSkill: " + skill);
-
-	    		/*if(format.equals("ISBN"))
-	    		{
-	    			skill += Integer.parseInt(scanResult);
-	    		}
-	    	} 
-	    	
-	    	else if (resultCode == RESULT_CANCELED) 
-	    	{
-	    		//showDialog(R.string.result_failed, getString(R.string.result_failed_why));
+	    		scannedResult = intent.getStringExtra("SCAN_RESULT");
 	    	}
 	    }
-	}*/
+	}
 	/**calcScanPoints takes in the result of the barcode scan, calculates the total number of points for the scan,
 	 * and assigns the points to the appropriate player attribute
 	 * @param scanResult
@@ -175,28 +293,40 @@ public class BarcodeWars extends Activity
 	 */
 	public String calcScanPoints(String scanResult) throws NullPointerException
 	{
+		//Variable for points after calculations are performed
 		int finalScannedPoints = 0;
+		//Map to hold the key/value pairs for potential scanned values to convert to numbers
 		Map<String, String> hm = new HashMap<String, String>();
 		
+		//Instantiates keys array holding potential values
 		String[] keys = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+		
+		//Instantiates values array to hold converted values
 		String[] values = {"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36"};
 		
+		//Adds array values to the hash map
 		for(int i = 0; i < keys.length; i++)
 		{
 			hm.put(keys[i], values[i]);
 		}
 		
+		//Adds each digit of the scanned number to get result
 		for(int i = 0; i < scanResult.length(); i++)
 		{
 			if(!scanResult.equals(null))
 			{	
-				finalScannedPoints += (Integer.parseInt((String)hm.get(scanResult.substring(i,i+1).toUpperCase()))) / 10;
-				
+				finalScannedPoints += Integer.parseInt((String)hm.get(scanResult.substring(i,i+1).toUpperCase()));
 			}
 		}
 		
-		int randomNum = (int)Math.round(Math.random() * 2);
+		//Divides points by 10
+		finalScannedPoints /= 10;
 		
+		//Instantiates a random number to randomly select attribute to be updated
+		int randomNum = (int)Math.round(Math.random() * 6);
+		
+		//Switch statement selects appropriate attribute based on generated random number above and
+		//sets the value in the DataStore
 		switch(randomNum)
 		{
 			case 0:
@@ -211,10 +341,26 @@ public class BarcodeWars extends Activity
 				increasedAttribute = "Skill";
 				dataStore.increaseAttribute(SKILL_ATTRIBUTE, finalScannedPoints);
 				break;
+			case 3:
+				increasedAttribute = "Humvee";
+				dataStore.increaseAttribute(HUMVEE_ATTRIBUTE, finalScannedPoints);
+				break;
+			case 4:
+				increasedAttribute = "Tank";
+				dataStore.increaseAttribute(TANK_ATTRIBUTE, finalScannedPoints);
+				break;
+			case 5:
+				increasedAttribute = "Heli";
+				dataStore.increaseAttribute(HELI_ATTRIBUTE, finalScannedPoints);
+				break;
+			case 6:
+				increasedAttribute = "Jet";
+				dataStore.increaseAttribute(JET_ATTRIBUTE, finalScannedPoints);
+				break;
+			
 		}
 		
-		Log.v("randomNumber: ", Integer.toString(randomNum));
-		
+		//Returns the final scanned amount as a String value
 		return Integer.toString(finalScannedPoints);
 	} 
 }
