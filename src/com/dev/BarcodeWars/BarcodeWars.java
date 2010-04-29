@@ -111,15 +111,7 @@ public class BarcodeWars extends Activity
 		fight = new FightEngine(appContext);
 		
 		//Initializes all the attributes in the DataStore
-		dataStore.setWins();
-		dataStore.setLosses();
-		dataStore.setHealth();
-		dataStore.setInfantry();
-		dataStore.setSkill();
-		dataStore.setHumvee();
-		dataStore.setTank();
-		dataStore.setHeli();
-		dataStore.setJet();
+		dataStore.setAttributes();
 		
 		//Initializes all the text boxes to the correct values from the DataStore
 		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
@@ -145,6 +137,67 @@ public class BarcodeWars extends Activity
 	    } 
 	};
 	
+	  /**
+	   * Method is used to test application. Button listener above and the
+	   * method onActivityResult must be commented out before uncommenting
+	   * this code and running the application
+	   */
+	  /*public Button.OnClickListener mScan = new Button.OnClickListener() { 
+	    public void onClick(View v) { 
+	    	    		
+    		String scanResult = calcScanPoints("A785H981T07B3");
+	        
+  	        //Sets Health text on GUI to correct value
+  	    	if(increasedAttribute.equals("Health"))
+  	    	{
+  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+  	    		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
+  	    	}
+  	    	
+  	    	//Sets Skill text on GUI to correct value
+  	    	if(increasedAttribute.equals("Skill"))
+  	    	{
+  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+  	    		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
+  	    	}
+  	    	
+  	    	//Sets Infantry text on GUI to correct value
+  	    	if(increasedAttribute.equals("Infantry"))
+  	    	{
+  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
+  	    		textViewInfantryQuantity.setText(Integer.toString(dataStore.getInfantry()));
+  	    	}
+  	    	
+  	    	//Sets Humvee text on GUI to correct value
+  	    	if(increasedAttribute.equals("Humvee"))
+  	    	{
+  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+  	    		textViewHumveeQuantity.setText(Integer.toString(dataStore.getHumvee()));
+  	    	}
+  	    	
+  	    	//Sets Tank text on GUI to correct value
+  	    	if(increasedAttribute.equals("Tank"))
+  	    	{
+  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+  	    		textViewTankQuantity.setText(Integer.toString(dataStore.getTank()));
+  	    	}
+  	    	
+  	    	//Sets Helicopter text on GUI to correct value
+  	    	if(increasedAttribute.equals("Heli"))
+  	    	{
+  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+  	    		textViewHeliQuantity.setText(Integer.toString(dataStore.getHeli()));
+  	    	}
+  	    	
+  	    	//Sets Jet Fighter text on GUI to correct value
+  	    	if(increasedAttribute.equals("Jet"))
+  	    	{
+  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + 1 + "!");
+  	    		textViewJetQuantity.setText(Integer.toString(dataStore.getJet()));
+  	    	}
+	    } 
+	};*/
+	
 	public final Button.OnClickListener ocl = new Button.OnClickListener() {
 	    public void onClick(View v) {
 	    		    	
@@ -154,9 +207,11 @@ public class BarcodeWars extends Activity
 		//Executes if user wins the fight and sets GUI texts to correct values using the DataStore
 		if(fight.getFightWinLose())
 		{
-			scanResultText.setText("Excellent, you won the fight, causing " + fight.getFightResult() + " damage!!");
+			scanResultText.setText("Excellent, you won the fight, causing " + fight.getFightResult() + " damage and increasing your skill by " + fight.getFightResult() + "!!");
 			dataStore.increaseAttribute(WINS_ATTRIBUTE, 1);
+			dataStore.increaseAttribute(SKILL_ATTRIBUTE, fight.getFightResult());
 			textViewWinsValue.setText(Integer.toString(dataStore.getWins()));
+			textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
 		}
 		
 		//Executes if user loses the fight and sets GUI texts to correct values using the DataStore
@@ -211,10 +266,7 @@ public class BarcodeWars extends Activity
            public void onStartTrackingTouch(SeekBar seekBar) {} 
            public void onStopTrackingTouch(SeekBar seekBar) {} 
             
-      }; 
-
-
-
+      };
 
 	/**onActivityResult initiates scanner activity, passing the barcode into the method, which calls
 	 * the method @calcScanPoints to calculate the total points the player receives from
@@ -235,13 +287,6 @@ public class BarcodeWars extends Activity
 	  	    	{
 	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
 	  	    		textViewHealthValue.setText(Integer.toString(dataStore.getHealth()));
-	  	    	}
-	  	    	
-	  	    	//Sets Skill text on GUI to correct value
-	  	    	if(increasedAttribute.equals("Skill"))
-	  	    	{
-	  	    		scanResultText.setText("Excellent! This scan increased your " + increasedAttribute + " by " + scanResult + "!");
-	  	    		textViewSkillValue.setText(Integer.toString(dataStore.getSkill()));
 	  	    	}
 	  	    	
 	  	    	//Sets Infantry text on GUI to correct value
@@ -281,6 +326,7 @@ public class BarcodeWars extends Activity
 	    	}
 	    }
 	}
+      
 	/**calcScanPoints takes in the result of the barcode scan, calculates the total number of points for the scan,
 	 * and assigns the points to the appropriate player attribute
 	 * @param scanResult
@@ -319,7 +365,7 @@ public class BarcodeWars extends Activity
 		finalScannedPoints /= 10;
 		
 		//Instantiates a random number to randomly select attribute to be updated
-		int randomNum = (int)Math.round(Math.random() * 6);
+		int randomNum = (int)Math.round(Math.random() * 5);
 		
 		//Switch statement selects appropriate attribute based on generated random number above and
 		//sets the value in the DataStore
@@ -334,22 +380,18 @@ public class BarcodeWars extends Activity
 				dataStore.increaseAttribute(INFANTRY_ATTRIBUTE, finalScannedPoints);
 				break;
 			case 2:
-				increasedAttribute = "Skill";
-				dataStore.increaseAttribute(SKILL_ATTRIBUTE, finalScannedPoints);
-				break;
-			case 3:
 				increasedAttribute = "Humvee";
 				dataStore.increaseAttribute(HUMVEE_ATTRIBUTE, finalScannedPoints);
 				break;
-			case 4:
+			case 3:
 				increasedAttribute = "Tank";
 				dataStore.increaseAttribute(TANK_ATTRIBUTE, finalScannedPoints);
 				break;
-			case 5:
+			case 4:
 				increasedAttribute = "Heli";
 				dataStore.increaseAttribute(HELI_ATTRIBUTE, finalScannedPoints);
 				break;
-			case 6:
+			case 5:
 				increasedAttribute = "Jet";
 				dataStore.increaseAttribute(JET_ATTRIBUTE, finalScannedPoints);
 				break;

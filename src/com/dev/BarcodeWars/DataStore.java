@@ -56,7 +56,7 @@ public class DataStore {
 	/**
 	 * Method sets the wins from the data storage file
 	 */
-	public void setWins()
+	public void setAttributes()
 	{
 		//String to hold currently read line
 		String line;
@@ -66,13 +66,13 @@ public class DataStore {
 		try
 		{
 			//Opens a file to read
-			FileInputStream winsFIS = appContext.openFileInput("datastore.txt");
+			FileInputStream attributesFIS = appContext.openFileInput("datastore.txt");
 			
 			//Adds file to reader for reading
-			BufferedReader winsIn = new BufferedReader(new InputStreamReader(winsFIS));
+			BufferedReader attributesIn = new BufferedReader(new InputStreamReader(attributesFIS));
 			
 			//Runs while there is still information to read
-			while((line = winsIn.readLine()) != null)
+			while((line = attributesIn.readLine()) != null)
 			{	
 				//Runs if it's the wins value
 				if(count == 0)
@@ -90,37 +90,6 @@ public class DataStore {
 					}
 				}
 				
-				count++;
-			}
-		}
-		
-		catch(Exception e)
-		{
-			System.out.print("\n" + e);
-		}
-	}
-	
-	/**
-	 * Method sets the losses from the data storage file
-	 */
-	public void setLosses()
-	{
-		//String to hold currently read line
-		String line;
-		//Count to keep track of current line
-		int count = 0;
-		
-		try
-		{	
-			//Opens a file to read
-			FileInputStream lossesFIS = appContext.openFileInput("datastore.txt");
-			
-			//Adds file to reader for reading
-			BufferedReader lossesIn = new BufferedReader(new InputStreamReader(lossesFIS));
-			
-			//Runs while there is still information to read
-			while((line = lossesIn.readLine()) != null)
-			{	
 				//Runs if it's the losses value
 				if(count == 1)
 				{
@@ -137,37 +106,6 @@ public class DataStore {
 					}
 				}
 				
-				count++;
-			}
-		}
-		
-		catch(Exception e)
-		{
-			System.out.print("\n" + e);
-		}
-	}
-	
-	/**
-	 * Method sets the losses from the data storage file
-	 */
-	public void setHealth()
-	{
-		//String to hold currently read line
-		String line;
-		//Count to keep track of current line
-		int count = 0;
-		
-		try
-		{
-			//Opens a file to read
-			FileInputStream healthFIS = appContext.openFileInput("datastore.txt");
-			
-			//Adds file to reader for reading
-			BufferedReader healthIn = new BufferedReader(new InputStreamReader(healthFIS));
-			
-			//Runs while there is still information to read
-			while((line = healthIn.readLine()) != null)
-			{
 				//Runs if it's the health value
 				if(count == 2)
 				{
@@ -184,37 +122,6 @@ public class DataStore {
 					}
 				}
 				
-				count++;
-			}
-		}
-		
-		catch(Exception e)
-		{
-			System.out.print("\n" + e);
-		}
-	}
-	
-	/**
-	 * Method sets the number of Infantry from the data storage file
-	 */
-	public void setInfantry()
-	{
-		//String to hold currently read line
-		String line;
-		//Count to keep track of current line
-		int count = 0;
-		
-		try
-		{
-			//Opens a file to read
-			FileInputStream infantryFIS = appContext.openFileInput("datastore.txt");
-			
-			//Adds file to reader for reading
-			BufferedReader infantryIn = new BufferedReader(new InputStreamReader(infantryFIS));
-			
-			//Runs while there is still information to read
-			while((line = infantryIn.readLine()) != null)
-			{	
 				//Runs if it's the infantry value
 				if(count == 3)
 				{
@@ -231,38 +138,7 @@ public class DataStore {
 					}
 				}
 				
-				count++;
-			}
-		}
-		
-		catch(Exception e)
-		{
-			System.out.print("\n" + e);
-		}
-	}
-	
-	/**
-	 * Method sets the Skill amount from the data storage file
-	 */
-	public void setSkill()
-	{
-		//String to hold currently read line
-		String line;
-		//Count to keep track of current line
-		int count = 0;
-		
-		try
-		{
-			//Opens a file to read
-			FileInputStream skillFIS = appContext.openFileInput("datastore.txt");
-			
-			//Adds file to reader for reading
-			BufferedReader skillIn = new BufferedReader(new InputStreamReader(skillFIS));
-			
-			//Runs while there is still information to read
-			while((line = skillIn.readLine()) != null)
-			{
-				//Runs if it's the Skill value
+				//Runs if it's the skill value
 				if(count == 4)
 				{
 					//Try allows for error catching
@@ -278,38 +154,7 @@ public class DataStore {
 					}
 				}
 				
-				count++;
-			}
-		}
-		
-		catch(Exception e)
-		{
-			System.out.print("\n" + e);
-		}
-	}
-	
-	/**
-	 * Method sets the number Humvees from the data storage file
-	 */
-	public void setHumvee()
-	{
-		//String to hold currently read line
-		String line;
-		//Count to keep track of current line
-		int count = 0;
-		
-		try
-		{
-			//Opens a file to read
-			FileInputStream humveeFIS = appContext.openFileInput("datastore.txt");
-			
-			//Adds file to reader for reading
-			BufferedReader humveeIn = new BufferedReader(new InputStreamReader(humveeFIS));
-			
-			//Runs while there is still information to read
-			while((line = humveeIn.readLine()) != null)
-			{
-				//Runs if it's the Humvee value
+				//Runs if it's the humvee value
 				if(count == 5)
 				{
 					//Try allows for error catching
@@ -325,38 +170,7 @@ public class DataStore {
 					}
 				}
 				
-				count++;
-			}
-		}
-		
-		catch(Exception e)
-		{
-			System.out.print("\n" + e);
-		}
-	}
-	
-	/**
-	 * Method sets the number of Tanks from the data storage file
-	 */
-	public void setTank()
-	{
-		//String to hold currently read line
-		String line;
-		//Count to keep track of current line
-		int count = 0;
-		
-		try
-		{
-			//Opens a file to read
-			FileInputStream tankFIS = appContext.openFileInput("datastore.txt");
-			
-			//Adds file to reader for reading
-			BufferedReader tankIn = new BufferedReader(new InputStreamReader(tankFIS));
-			
-			//Runs while there is still information to read
-			while((line = tankIn.readLine()) != null)
-			{
-				//Runs if it's the Tank value
+				//Runs if it's the tank value
 				if(count == 6)
 				{
 					//Try allows for error catching
@@ -372,38 +186,7 @@ public class DataStore {
 					}
 				}
 				
-				count++;
-			}
-		}
-		
-		catch(Exception e)
-		{
-			System.out.print("\n" + e);
-		}
-	}
-	
-	/**
-	 * Method sets the number Helicopters from the data storage file
-	 */
-	public void setHeli()
-	{
-		//String to hold currently read line
-		String line;
-		//Count to keep track of current line
-		int count = 0;
-		
-		try
-		{
-			//Opens a file to read
-			FileInputStream heliFIS = appContext.openFileInput("datastore.txt");
-			
-			//Adds file to reader for reading
-			BufferedReader heliIn = new BufferedReader(new InputStreamReader(heliFIS));
-			
-			//Runs while there is still information to read
-			while((line = heliIn.readLine()) != null)
-			{
-				//Runs if it's the Helicopter value
+				//Runs if it's the helicopter value
 				if(count == 7)
 				{
 					//Try allows for error catching
@@ -419,38 +202,7 @@ public class DataStore {
 					}
 				}
 				
-				count++;
-			}
-		}
-		
-		catch(Exception e)
-		{
-			System.out.print("\n" + e);
-		}
-	}
-	
-	/**
-	 * Method sets the number of Fighter Jets from the data storage file
-	 */
-	public void setJet()
-	{
-		//String to hold currently read line
-		String line;
-		//Count to keep track of current line
-		int count = 0;
-		
-		try
-		{
-			//Opens a file to read
-			FileInputStream jetFIS = appContext.openFileInput("datastore.txt");
-			
-			//Adds file to reader for reading
-			BufferedReader jetIn = new BufferedReader(new InputStreamReader(jetFIS));
-			
-			//Runs while there is still information to read
-			while((line = jetIn.readLine()) != null)
-			{
-				//Runs if it's the Fighter Jet value
+				//Runs if it's the fighter jet value
 				if(count == 8)
 				{
 					//Try allows for error catching
